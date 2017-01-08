@@ -29,6 +29,7 @@ Node *creat()
 	for(i = 0; i < 3; i++)
 	{
 		p1 = (Node *)malloc(sizeof(LEN));
+		p1->num = i;
 		p1->value = str[i];
 		p1->next = NULL;
 		p2->next = p1;
@@ -38,6 +39,22 @@ Node *creat()
 	return head;
 }
 
+Node *removeNode(Node **head, int searchValue)
+{
+	Node **doublepointer = head;
+		
+	while(*doublepointer && ((*doublepointer)->num != searchValue))
+	{
+		doublepointer = &(*doublepointer)->next;
+	}
+	
+	Node *deleteNode = *doublepointer;
+	*doublepointer = deleteNode->next;
+	deleteNode->next = NULL;
+	
+	return deleteNode;
+}
+
 void showme(Node *head)
 {
 //	Node *p = NULL;
@@ -45,7 +62,7 @@ void showme(Node *head)
 	
 	while(head != NULL)
 	{
-		printf("%s->", head->value);
+		printf("%d+%s->", head->num, head->value);
 		head = head->next;
 	}	
 	printf("NULL\n");
@@ -57,9 +74,19 @@ int main(void)
 //	strcpy(s, "sdde");
 //	printf("%s\n", s);
 	
-	Node *head;
+	Node *head, *deleteNode;
+
 	head = creat();
-//	printf("%s\n", head->value);
 	showme(head);
+
+	deleteNode = removeNode(&head, 2);
+	showme(head);
+
+	deleteNode = removeNode(&head, 1);
+	showme(head);
+	
+	deleteNode = removeNode(&head, 100);
+	showme(head);
+	
 	return 0;
 }
