@@ -41,6 +41,13 @@ Node *creat()
 
 Node *removeNode(Node **head, int searchValue)
 {
+	if(*head == NULL)
+	{
+		printf("empty list!\n");
+
+		return;
+	}
+	
 	Node **doublepointer = head;
 		
 	while(*doublepointer && ((*doublepointer)->num != searchValue))
@@ -55,11 +62,21 @@ Node *removeNode(Node **head, int searchValue)
 	return deleteNode;
 }
 
+void killme(Node **head)
+{
+	Node *p1;
+	
+	while(*head != NULL)
+	{
+		p1 = *head;
+		*head = (*head)->next;
+		free(p1);
+	}
+}
+
 void showme(Node *head)
 {
-//	Node *p = NULL;
-//	p = head;
-	
+	printf("Head = %p\n", head);
 	while(head != NULL)
 	{
 		printf("%d+%s->", head->num, head->value);
@@ -70,14 +87,14 @@ void showme(Node *head)
 
 int main(void)
 {
-//	char s[100];
-//	strcpy(s, "sdde");
-//	printf("%s\n", s);
-	
 	Node *head, *deleteNode;
 
 	head = creat();
 	showme(head);
+	
+	killme(&head);
+	showme(head);
+
 
 	deleteNode = removeNode(&head, 2);
 	showme(head);
@@ -87,6 +104,6 @@ int main(void)
 	
 	deleteNode = removeNode(&head, 100);
 	showme(head);
-	
+
 	return 0;
 }

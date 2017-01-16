@@ -2,20 +2,31 @@
 #include <stdlib.h>
 #include <string.h>
 
-void inv(int x[], int start_num, int rev_num) //3, 5
+void swap(int *p1, int *p2)
+{
+	int tmp;
+	tmp = *p1;
+	*p1 = *p2;
+	*p2 = tmp;
+}
+
+/*
+	start_num	: starts from ZERO;
+	rev_num		: how many numbers will be reverted. starts from 1.
+*/
+void inv(int x[], int start_num, int rev_num)
 {
 	int temp;
 	int i, j;
 	int middle;
 	
-	middle = (rev_num - 1) / 2 + start_num;
+	middle = (rev_num - 1) / 2 + 1;	//get the arry number of middle. we need plus 1 since rev_num starts from 1.
+	printf("middle = %d\n", middle);
 	
-	for(i = start_num; i <= middle; i++)
+	for(i = 0; i <= middle; i++)
 	{
-		j = start_num + rev_num - 1 - (i - start_num);
-		temp = x[i];
-		x[i] = x[j];
-		x[j] = temp;
+		j = rev_num + 1 -i;
+		swap(&x[i + start_num], &x[j + start_num]);
 	}
 }
 
@@ -25,19 +36,28 @@ void showme(int *arr, int num)
 
 	for(i = 0; i < num; i++)
 	{
-		printf("%3d", *(arr + i));
+		printf("%5d", *(arr + i));
 	}	
 	printf("\n");
 }
 
 int main()
 {
-	int arr[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
-	int num = sizeof(arr) / sizeof(arr[0]);
+	time_t t;
+	int i, n = 16;
+	int arr[n];
+	
+	srand((unsigned) time(&t));
+	for(i = 0; i < n; i++)
+	{
+		arr[i] = rand() % 100;
+	}
+	
+	int num = n;//sizeof(arr) / sizeof(arr[0]);
 	
 	showme(arr, num);
 	
-	inv(arr, 5, 6);
+	inv(arr, 1, 6);
 	showme(arr, num);
 	
 	return 0;
