@@ -13,10 +13,7 @@
 */
 int my_strcpy(char *des, const char *src)
 {
-	if((des == NULL) || (src == NULL))
-	{
-		return 0;
-	}
+	assert((des != NULL) && (src != NULL));
 	
 	char *address = des;
 	while((*des++ = *src++) != '\0')
@@ -78,8 +75,9 @@ int main(void)
 #elif defined strstr
 int my_strstr(char *pStr, char *pSub)
 {
-	char *p1, *p2 = pSub;
+	char *p1 = pStr, *p2 = pSub;
 	
+	#if 1
 	if((pStr == NULL) || (pSub == NULL))
 	{
 		return 0;
@@ -89,30 +87,36 @@ int my_strstr(char *pStr, char *pSub)
 	{
 		return 0;
 	}
-	
-	for(p1 = pStr; p1 != '\0'; p1++)
+	#endif
+	//for(p1 = pStr; p1 != '\0'; p1++)
+	while(*pStr)
 	{
-//		while((pSub++ == p1++) != '\0')
-		for(p2 = pSub; p2 != '\0' && p1 != '\0'; p1++, p2++)
+		p1 = pStr;
+		p2 = pSub;
+		
+		while(*p2 == *p1)
 		{
-			if(p2 != p1)
+			p2++;
+			p1++;
+			
+			if(*p2 == '\0')
 			{
-				p2 = pSub;
-				break;
+				printf("pSub is the sub string of pStr\n");
+				return 1;
 			}
 		}
-		
-		if(p2 == '\0')
-		{
-			return 1;
-		}
+
+		pStr++;
 	}
+	
+	printf("psub isn't the sub string of pStr\n");
+	return 0;
 }
 
 int main(void)
 {
 	char *pStr = "gooday";
-	char *pSub = "dy";
+	char *pSub = "od";
 	//my_strstr();
 	printf("%d\n", my_strstr(pStr, pSub));
 	return 0;
