@@ -5,7 +5,8 @@
 
 //#define strcpy	//strcpy
 //#define strcat	//strcat
-#define strstr	//strstr
+//#define strstr	//strstr
+#define link_list
 
 #if defined xx
 /*
@@ -119,6 +120,93 @@ int main(void)
 	char *pSub = "od";
 	//my_strstr();
 	printf("%d\n", my_strstr(pStr, pSub));
+	return 0;
+}
+
+#elif defined link_list
+
+typedef struct stu
+{
+	int num;
+	struct stu *next;
+} STU;
+
+#define LEN sizeof(STU)
+
+STU *create(void)
+{
+	STU *head, *p1, *p2;
+	int i = 190;
+	
+	if((p1 = (STU *)malloc(LEN)) == NULL)
+	{
+		perror("malloc failed!");
+		return -1;
+	}
+	p1->num = 100;
+	p1->next = NULL;
+	head = p2 = p1;
+	
+	while(p1->num != 200)
+	{
+		if((p1 = (STU *)malloc(LEN)) == NULL)
+		{
+			perror("malloc failed!");
+			return -1;
+		}
+		p1->num = i++;
+		p1->next = NULL;
+		p2->next = p1;
+		p2 = p1;
+	}
+	
+	return head;
+}
+
+STU *Insert(STU *head)
+{
+	STU *p, *left, *right;
+	p = head;
+	
+	while(p->num != 198)
+	{
+		if(p->next == NULL)
+		{
+			return -1;
+		}
+		
+		p = p->next;
+		printf("---------%d\n", p->num);
+	}
+	
+	left = p;
+	right = p->next;
+	
+	p = (STU *)malloc(LEN);
+	p->num = 88;
+	left->next = p;
+	p->next = right;
+	
+	return head;
+}
+
+void showme(STU *head)
+{
+	STU *p = head;
+	while(p->next != NULL)
+	{
+		printf("%d\n", p->num);
+		p = p->next;
+	}
+}
+
+int main(void)
+{
+	STU *head = create();
+	showme(head);
+	head = Insert(head);
+	showme(head);
+	
 	return 0;
 }
 

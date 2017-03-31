@@ -1,0 +1,9 @@
+all: string_interview
+
+string_interview:
+	gcc string_interview.c -o string_interview
+
+clean:
+	rm string_interview
+
+.PHONY: clean
