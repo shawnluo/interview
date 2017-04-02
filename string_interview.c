@@ -3,16 +3,14 @@
 #include <string.h>
 #include <assert.h>
 
-//#define strcpy	//strcpy
-//#define strcat	//strcat
-//#define strstr	//strstr
+//#define my_strcpy_FUN
+//#define my_strcat_FUN
+//#define my_strstr_FUN
 #define link_list
 
-#if defined xx
-/*
-	string copy
-*/
-int my_strcpy(char *des, const char *src)
+#if defined my_strcpy_FUN
+
+char *my_strcpy(char *des, const char *src)
 {
 	assert((des != NULL) && (src != NULL));
 	
@@ -21,9 +19,9 @@ int my_strcpy(char *des, const char *src)
 	{
 	}
 	
-	return 1;
-
+	return address;
 }
+
 
 int main(void)
 {
@@ -41,30 +39,27 @@ int main(void)
 	}
 }
 
-#elif defined yy
+#elif defined my_strcat_FUN
 
-int my_strcat(char *pDes, const char *pSrc)
-{
-	if((pDes == NULL) || (pSrc == NULL))
-	{
-		return 0;
-	}
+char *my_strcat(char *pDes, const char *pSrc)
+{	
+	assert((pDes != NULL) && (pSrc != NULL));
+	char *tmp = pDes;
 	
-	int n = strlen(pDes);
-	pDes = pDes + n;
+	pDes+= strlen(pDes);
 	
 	while((*pDes++ = *pSrc++) != '\0')
 	{
 		
 	}
 	
-	return 1;
+	return tmp;
 }
 	
 int main(void)
 {
-	char pSrc[] = {"show"};
-	char pDes[30] = {"1234me"};
+	char pSrc[] = {"shownum"};
+	char pDes[30] = {"1234meme"};
 	
 	my_strcat(pDes, pSrc);
 	
@@ -73,52 +68,43 @@ int main(void)
 	return 0;
 }
 
-#elif defined strstr
-int my_strstr(char *pStr, char *pSub)
+#elif defined my_strstr_FUN
+
+
+int my_strstr(char *str, char *substr)
 {
-	char *p1 = pStr, *p2 = pSub;
+	assert((str != NULL) && (substr != NULL));
 	
-	#if 1
-	if((pStr == NULL) || (pSub == NULL))
+	if((strlen(str) == 0) && (strlen(substr) == 0))
 	{
-		return 0;
+		return 1;
 	}
 	
-	if((*pStr == '\0') || (*pSub == '\0'))
+	char *p_str = str, *p_substr = substr;
+	
+	while(*p_str)
 	{
-		return 0;
-	}
-	#endif
-	//for(p1 = pStr; p1 != '\0'; p1++)
-	while(*pStr)
-	{
-		p1 = pStr;
-		p2 = pSub;
+		p_substr = substr;
 		
-		while(*p2 == *p1)
+		while(*p_str++ == *p_substr++)
 		{
-			p2++;
-			p1++;
-			
-			if(*p2 == '\0')
+			if(*p_substr == '\0')
 			{
-				printf("pSub is the sub string of pStr\n");
 				return 1;
 			}
 		}
-
-		pStr++;
+		
+		p_str++;
 	}
 	
-	printf("psub isn't the sub string of pStr\n");
 	return 0;
 }
 
 int main(void)
 {
-	char *pStr = "gooday";
-	char *pSub = "od";
-	//my_strstr();
+	char *pStr = "";
+	char *pSub = "";
+
 	printf("%d\n", my_strstr(pStr, pSub));
 	return 0;
 }
@@ -186,6 +172,20 @@ STU *Insert(STU *head)
 	p->num = 88;
 	left->next = p;
 	p->next = right;
+	
+	return head;
+}
+
+STU *DelNode(STU *head, int num)
+{
+	STU *previous, *current;
+	current = head;
+	
+	while(current->next->num != num)
+	{
+		current = current->next;
+	}
+//	previous 
 	
 	return head;
 }
